@@ -1,7 +1,63 @@
 <%- include('partials/header.ejs') %>
+<%- include('partials/navbar.ejs') %>
 
+    
+<style>
+    .container{
+        margin-top:50px;
+    }
+    .noticias{
+        max-width:930px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card{
+        display:block;
+        margin:0 auto;
+        float:left;
+        margin:10px;
+        border:1px solid gray;
+    }
+    .card h4{
+        text-align: justify;
+        border-radius: 10px;
+        boder:1px solid black;
+    }
+    .card-title{
+        margin:10px;
+    }
+</style>
 <body>
-    <h1>Ola Mundo!</h1>
+    <div class="jumbotron">
+        <h1 class="display-4">Article Maker</h1>
+        <p class="lead">Lorem ipsum duis purus aenean, quam accumsan fusce luctus habitant, varius aenean at. tellus metus adipiscing senectus a litora vulputate lorem netus consectetur luctus sodales, neque molestie class donec cursus feugiat primis vel facilisis ligula, taciti placerat dolor.</p>
+        <hr class="my-4">
+        <p>Lorem ipsum duis purus aenean, quam accumsan fusce luctus habitant, varius aenean at. tellus metus adipiscing senectus </p>
+        <p class="lead">
+          <a class="btn btn-dark btn-lg" href="#" role="button">Learn more</a>
+        </p>
+      </div>
+    <div class="container">
+        <div class="noticias">
+        <% articles.forEach(article =>{ %>
+
+            <div class="card" style="width: 18rem">
+                <div class="card-title">
+                    <h4><%- article.title %></h4>
+                </div>
+                <div class="card-body" >
+                    <h6 class="card-subtitle mb-2 text-muted">Categoria</h6>
+                    <p class="card-text"><%- article.Categoria %></p>
+                    <a href="" class="btn btn-dark" style="margin-bottom:10px; float:right;">Ler Artigo</a>
+
+                </div>
+            </div>
+            <br>
+        <% }) %>
+    </div>
+</div>
+
 </body>
 
 <%- include('partials/footer.ejs') %>
