@@ -1,5 +1,5 @@
 <%- include('partials/header.ejs') %>
-<%- include('partials/navbar.ejs') %>
+<%- include('partials/navbaruser.ejs') %>
 
     
 <style>
@@ -47,9 +47,7 @@
                     <h4><%- article.title %></h4>
                 </div>
                 <div class="card-body" >
-                    <h6 class="card-subtitle mb-2 text-muted">Categoria</h6>
-                    <p class="card-text"><%- article.Categoria %></p>
-                    <a href="" class="btn btn-dark" style="margin-bottom:10px; float:right;">Ler Artigo</a>
+                    <a href="/<%- article.slug %>" class="btn btn-dark" style="margin-bottom:10px; float:right;">Ler Artigo</a>
 
                 </div>
             </div>
