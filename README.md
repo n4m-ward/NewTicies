@@ -54,7 +54,7 @@
 
 
 <section class="grid2">
-    <div class="video">
+    <div class="principal">
       <img src="./gif/home.gif">
       <h2 class="center">Area Do Leitor</h2>
     </div>
