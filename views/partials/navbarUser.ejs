@@ -1,6 +1,10 @@
+<style>
+  li{
+    margin: 0 10px;
+  }
+</style>
 
-
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<nav class="navbar navbar-expand-md bg-dark navbar-dark ">
 
     <a class="navbar-brand" href="#">Article Maker</a>
   
@@ -9,20 +13,61 @@
     </button>
   
   
-    <div class="collapse navbar-collapse" id="dropdown">
-        <ul class="navbar-nav">
+    <div class="collapse navbar-collapse d-lg-flex justify-content-end" id="dropdown">
+      
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a href="/" class="nav-link ">Home</a>
+                <a href="/" class="nav-link active">Home</a>
             </li>
-            <% categories.forEach(category =>{ %>
-                <li class="nav-item">
-                    <a href="/category/<%- category.slug %>" class="nav-link "><%-category.title %></a>
-                </li>
-    
-            <%}); %>
+
+
+
+            <% if(estaLogado){ %>
+              
+              <li>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ferramentas ADM
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/admin/categories">Categorias</a>
+                <a class="dropdown-item" href="/admin/articles">Artigos</a>
+                <a class="dropdown-item" href="/admin/users">Usuarios</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/logout">Log-Out</a>
+              </div>
+            </div>
+          </li>
+
+
+          <% }else{ %>
+
+            <li class="nav-item">
+              <a href="/login" class="nav-link active">Login</a>
+          </li>
+
+          <% } %>
+
+
+            <li>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Categorias
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <% categories.forEach(category =>{ %>
+                            <a href="/category/<%- category.slug %>" class="dropdown-item "><%-category.title %></a>
+
+                        
             
+                    <%}); %>
             
+                </div>
+              </div>
+              
+            </li>
         </ul>
+
       </ul>
     </div>
   </nav>

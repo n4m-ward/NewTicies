@@ -1,5 +1,5 @@
 <%- include('../../partials/header.ejs') %>
-<%- include('../../partials/navbaruser.ejs') %>
+<%- include('../../partials/navbarUser.ejs') %>
 
     
 <style>
@@ -42,8 +42,8 @@
 
         </div>
         <div class="noticias">
-        <% result.articles.rows.forEach(article =>{ %>
 
+        <% result.articles.rows.forEach(article =>{ %>
             <div class="card" style="width: 18rem">
                 <div class="card-title">
                     <h4><%- article.title %></h4>

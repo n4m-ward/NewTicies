@@ -1,0 +1,56 @@
+<%- include('../../partials/header.ejs') %>
+<%- include('../../partials/navbarUser.ejs') %>
+
+
+<body>
+    <div class="container">
+        <hr>
+        <h2>Usuarios</h2>
+        <hr>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user =>{ %>
+                    <tr>
+                    <th><%- user.id %></th>
+                    <th><%- user.login %></th>
+                    <th><%- user.email %></th>
+
+                    <th>
+                        <form method="POST" action="/users/delete" style="display: inline;" onsubmit="confirmarDelete(event, this)">
+                            <input type="hidden" name="id" value="<%- user.id %>">
+                            <button class="btn btn-dark">Excluir</button>
+                        </form>
+                        
+                    </th>
+                    </tr>
+                <% }); %>
+
+
+        
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+
+<%- include('../../partials/footer.ejs') %>
+
+
+<script>
+    function confirmarDelete(event,form){
+        event.preventDefault();
+        var confirmar = confirm('Você quer deletar essa categoria?');
+        if(confirmar){
+            form.submit();
+        }
+    }
+</script>

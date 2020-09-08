@@ -3,13 +3,18 @@ const router =  express.Router();
 const Category = require('./Category');
 const slugify = require('slugify');
 const bodyParser = require('body-parser');
+const adminAuth = require('../middlewares/adminAuth');
 
 
-router.get('/admin/categories/new',(req,res)=>{
-    res.render('admin/categories/new');
+router.get('/admin/categories/new',adminAuth,(req,res)=>{
+    var estaLogado = req.session.user;
+    Category.findAll().then(categories =>{
+        res.render('admin/categories/new',{estaLogado:estaLogado,categories:categories});
+    })
+
 });
 
-router.post("/categories/save",(req,res)=>{
+router.post("/categories/save",adminAuth,(req,res)=>{
     var title = req.body.title;
     if(title != undefined){
         Category.create({
@@ -24,14 +29,15 @@ router.post("/categories/save",(req,res)=>{
     }
 });
 
-router.get('/admin/categories',(req,res)=>{
+router.get('/admin/categories',adminAuth,(req,res)=>{
+    var estaLogado = req.session.user;
     
     Category.findAll().then(categories =>{
-        res.render('admin/categories/index',{categories: categories})
+        res.render('admin/categories/index',{categories: categories,estaLogado:estaLogado})
     });
 });
 
-router.post('/categories/delete',(req,res)=>{
+router.post('/categories/delete',adminAuth,(req,res)=>{
     var id = req.body.id;
     if(id != undefined){
         if(!isNaN(id)){
@@ -55,8 +61,9 @@ router.post('/categories/delete',(req,res)=>{
 
 });
 
-router.get('/admin/categories/edit/:id',(req,res)=>{
+router.get('/admin/categories/edit/:id',adminAuth,(req,res)=>{
     var id = req.params.id;
+    var estaLogado = req.session.user;
 
     if(isNaN(id)){
         res.redirect('/admin/categories');
@@ -69,6 +76,7 @@ router.get('/admin/categories/edit/:id',(req,res)=>{
 
             res.render('admin/categories/edit',{
                 category:category,
+                estaLogado:estaLogado
             });
 
 
@@ -80,7 +88,7 @@ router.get('/admin/categories/edit/:id',(req,res)=>{
     })
 
 })
-router.post('/categories/update',(req,res)=>{
+router.post('/categories/update',adminAuth,(req,res)=>{
     var id = req.body.id;
     var title = req.body.title;
     var slug = req.body.title;

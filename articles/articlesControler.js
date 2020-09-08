@@ -3,18 +3,27 @@ const router =  express.Router();
 const Category = require('../categories/Category');
 const Article = require('./Article');
 const slugify = require('slugify');
+const adminAuth = require('../middlewares/adminAuth');
 
-router.get('/admin/articles',(req,res)=>{
-    Article.findAll({
-        include:[{model:Category}]
-    }).then(articles =>{
-        res.render("admin/articles/index",{articles:articles})
+router.get('/admin/articles',adminAuth,(req,res)=>{
+    var estaLogado = req.session.user;
+    Category.findAll().then(categories =>{
+        Article.findAll({
+            include:[{model:Category}]
+        }).then(articles =>{
+            res.render("admin/articles/index",{
+                articles:articles,
+                estaLogado:estaLogado,
+            categories:categories})
+        })
     })
+    
 })
 
-router.get('/admin/articles/new',(req,res)=>{
+router.get('/admin/articles/new',adminAuth,(req,res)=>{
+    var estaLogado = req.session.user;
     Category.findAll().then(categories =>{
-        res.render('../views/admin/articles/new',{categories:categories});
+        res.render('../views/admin/articles/new',{categories:categories,estaLogado:estaLogado});
     })
     
 })
@@ -36,7 +45,7 @@ router.post('/articles/save',(req,res)=>{
 
 })
 
-router.post('/articles/delete',(req,res)=>{
+router.post('/articles/delete',adminAuth,(req,res)=>{
     var id = req.body.id;
     if(id != undefined){
         if(!isNaN(id)){
@@ -61,12 +70,13 @@ router.post('/articles/delete',(req,res)=>{
     
 });
 
-router.get('/admin/articles/edit/:id',(req,res)=>{
+router.get('/admin/articles/edit/:id',adminAuth,(req,res)=>{
     var id = req.params.id;
+    var estaLogado = req.session.user;
     Article.findByPk(id).then(article =>{
         if(article != undefined){
             Category.findAll().then(categories =>{
-                res.render('admin/articles/edit',{categories:categories,article:article});
+                res.render('admin/articles/edit',{categories:categories,article:article,estaLogado:estaLogado});
             })
             
         } else{
@@ -99,13 +109,14 @@ router.post('/articles/update',(req,res)=>{
 })
 
 router.get('/articles/page/:num',(req,res)=>{
+    var estaLogado = req.session.user;
     var page = req.params.num;
     var offset = 0;
 
     if(isNaN(page) || offset == 1){
         offset = 0;
     } else{
-        offset = (parseInt(page)-1) * 6 ;
+        offset = parseInt(page) * 6 ;
     }
 
     Article.findAndCountAll({
@@ -134,10 +145,12 @@ router.get('/articles/page/:num',(req,res)=>{
 
 
         Category.findAll().then(categories =>{
-            res.render('admin/articles/page',{result:result, categories:categories})
+            res.render('admin/articles/page',{result:result, categories:categories,estaLogado:estaLogado})
         })
 
     })
 })
+
+
 
 module.exports = router;
