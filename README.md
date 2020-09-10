@@ -1,18 +1,3 @@
-<style>
-    *{
-        font-family: Arial, Helvetica, sans-serif;
-    }
-    h1,h2,p{
-        text-align: center;
-    }
-    img{
-        display: block;
-        margin:0 auto;
-    }
-    
-</style>
-
-
 
 <h1 > Article Maker</h1>
 <br>
