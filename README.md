@@ -2,41 +2,23 @@
     *{
         font-family: Arial, Helvetica, sans-serif;
     }
-    .center{
+    h1,h2,p{
         text-align: center;
     }
-     img{
-         max-width: 100%;
-         display: block;
-     }
-    .grid2{
-        display:grid;
-        grid-template-columns: 1fr;
-        grid-gap:20px;
-        max-width:800px;
-        padding:10px;
+    img{
+        display: block;
         margin:0 auto;
     }
-    .sidebar{
-            display:flex;
-            overflow:scroll;
-        }
-    .sidebar >div {
-        margin-bottom:10px;
-        flex: 1 0 400px;
-        margin:0 10px;
-    }
-
     
 </style>
 
 
 
-<h1 class="center"> Article Maker</h1>
+<h1 > Article Maker</h1>
 <br>
 <hr>
 
-<p class="center">Um Pequeno Blog, feito com node.js, mysql, bootstrap e tinnyMCE</p>
+<p>Um Pequeno Blog, feito com node.js, mysql, bootstrap e tinnyMCE</p>
 
 <hr>
 
@@ -51,28 +33,24 @@
     <li>Somente ADM podem fazer qualquer adição, remoção ou edição dos itens no site</li>
 </ul>
 
+<hr>
+<br>
 
+<img src="./gif/home.gif">
+<h2>Area Do Leitor</h2>
 
-<section class="grid2">
-    <div class="principal">
-      <img src="./gif/home.gif">
-      <h2 class="center">Area Do Leitor</h2>
-    </div>
-    <div class="sidebar">
-        <div>
-            <img src="./gif/user.gif">
-            <p class="center">Login e crud de usuarios</p>
-          </div>
-          <div>
-              <img src="./gif/categoria.gif">
-              <p class="center">Adição, edição e exclusão de categorias</p>
-            </div>
-            <div>
-                <img src="./gif/artigos.gif">
-                <p class="center">Adição, edição e exclusão de Artigos</p>
-              </div>
-            </div>
-        </div>
-    </div>    
+<hr>
+<br>
 
-  </section>
+<img src="./gif/user.gif">
+<p>Login e crud de usuarios</p>
+
+<hr>
+<br>
+
+<img src="./gif/categoria.gif">
+<p>Adição, edição e exclusão de categorias</p>
+<hr>
+<br>
+<img src="./gif/artigos.gif">
+<p>Adição, edição e exclusão de Artigos</p>
