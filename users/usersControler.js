@@ -91,23 +91,24 @@ router.get('/login',(req,res) =>{
 router.post('/authenticate',(req,res)=>{
     var login = req.body.login;
     var password = req.body.password;
-    var correct = true;
-    if(correct){
-        req.session.user = {
-            id: 2,
-            login: 'teste'
-        }
-        res.redirect('/admin/articles')
-    }else{
-        res.redirect('/login')
-    }
 
-    /*User.findOne({where:{ login:login }}).then(user => {
+    User.findOne({where:{ login:login }}).then(user => {
         if(user != undefined){
             var correct = bcrypt.compareSync(password,user.password);
 
-            
-    })*/
+            if(correct){
+                req.session.user = {
+                    id: user.id,
+                    login: user.login
+                }
+                res.redirect('/admin/articles')
+            }else{
+                res.redirect('/login')
+            }
+        }else{
+            res.redirect('/login')
+        }
+    })
 
 })
 
