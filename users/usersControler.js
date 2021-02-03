@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const { route } = require('../articles/articlesControler');
 const adminAuth = require('../middlewares/adminAuth');
 
-router.get('/admin/users',adminAuth,(req,res) => {
+router.get('/admin/users',(req,res) => {
     var estaLogado = req.session.user;
     if(req.session.user == undefined){
         res.redirect('/')
@@ -57,7 +57,7 @@ router.post('/users/create',(req,res)=>{
 })
 
 
-router.post('/users/delete',adminAuth,(req,res)=>{
+router.post('/users/delete',(req,res)=>{
     var id = req.body.id;
     if(id != undefined){
         if(!isNaN(id)){
