@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
-const connection = new Sequelize('heroku_b7e8ee8c9f3fe1b','b662165df25638','37406118',{
-    host:'us-cdbr-east-03.cleardb.com:3307',
+const connection = new Sequelize('heroku_4ae60710a5260b9','b7e5780dfac624','703aa011',{
+    host:'us-cdbr-east-03.cleardb.com',
     dialect:'mysql',
     timezone: "-03:00"
 });
