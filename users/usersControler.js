@@ -20,7 +20,7 @@ router.get('/admin/users',adminAuth,(req,res) => {
 
 })
 
-router.get('/admin/users/create',adminAuth,(req,res)=>{
+router.get('/admin/users/create',(req,res)=>{
     
     Category.findAll().then(categories =>{
         res.render('admin/users/create',{categories:categories});
@@ -29,7 +29,7 @@ router.get('/admin/users/create',adminAuth,(req,res)=>{
 
 })
 
-router.post('/users/create',adminAuth,(req,res)=>{
+router.post('/users/create',(req,res)=>{
     var email = req.body.email;
     var password = req.body.password;
     var login = req.body.Login;
@@ -92,7 +92,6 @@ router.post('/authenticate',(req,res)=>{
     var login = req.body.login;
     var password = req.body.password;
     res.redirect('/admin/articles')
-    /*
     User.findOne({where:{ login:login }}).then(user => {
         if(user != undefined){
             var correct = bcrypt.compareSync(password,user.password);
@@ -109,7 +108,7 @@ router.post('/authenticate',(req,res)=>{
         }else{
             res.redirect('/login')
         }
-    })*/
+    })
 
 })
 
