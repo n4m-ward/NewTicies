@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const { route } = require('../articles/articlesControler');
 const adminAuth = require('../middlewares/adminAuth');
 
-router.get('/admin/users',(req,res) => {
+router.get('/admin/users',adminAuth,(req,res) => {
     var estaLogado = req.session.user;
     if(req.session.user == undefined){
         res.redirect('/')
@@ -20,7 +20,7 @@ router.get('/admin/users',(req,res) => {
 
 })
 
-router.get('/admin/users/create',(req,res)=>{
+router.get('/admin/users/create',adminAuth,(req,res)=>{
     
     Category.findAll().then(categories =>{
         res.render('admin/users/create',{categories:categories});
@@ -29,7 +29,7 @@ router.get('/admin/users/create',(req,res)=>{
 
 })
 
-router.post('/users/create',(req,res)=>{
+router.post('/users/create',adminAuth,(req,res)=>{
     var email = req.body.email;
     var password = req.body.password;
     var login = req.body.Login;
@@ -57,7 +57,7 @@ router.post('/users/create',(req,res)=>{
 })
 
 
-router.post('/users/delete',(req,res)=>{
+router.post('/users/delete',adminAuth,(req,res)=>{
     var id = req.body.id;
     if(id != undefined){
         if(!isNaN(id)){
@@ -91,7 +91,7 @@ router.get('/login',(req,res) =>{
 router.post('/authenticate',(req,res)=>{
     var login = req.body.login;
     var password = req.body.password;
-    res.redirect('/admin/articles')
+
     User.findOne({where:{ login:login }}).then(user => {
         if(user != undefined){
             var correct = bcrypt.compareSync(password,user.password);
@@ -101,7 +101,7 @@ router.post('/authenticate',(req,res)=>{
                     id: user.id,
                     login: user.login
                 }
-                
+                res.redirect('/admin/articles')
             }else{
                 res.redirect('/login')
             }
