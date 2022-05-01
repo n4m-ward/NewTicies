@@ -52,15 +52,16 @@ class CategoriesControler {
             );
         } catch (err) {
             console.log(err)
-            res.redirect('/admin/categories');
+            return res.redirect('/admin/categories');
         }
 
     }
 
     async saveCategories(req, res) {
         const title = req.body.title;
+
         if (!title) {
-            res.redirect('/admin/categories/new');
+            return res.redirect('/admin/categories/new');
         }
         await Category.create({
             title: title,
@@ -129,7 +130,7 @@ class CategoriesControler {
             )
         } catch (err) {
             console.log(err)
-            res.redirect('/')
+            return res.redirect('/')
         }
     }
 }

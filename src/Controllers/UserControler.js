@@ -5,7 +5,8 @@ const bcrypt = require('bcryptjs');
 class UserControler {
     logout(req, res) {
         req.session.user = undefined;
-        res.redirect('/');
+
+        return res.redirect('/');
     }
 
     async authenticateUser(req, res) {
@@ -15,35 +16,39 @@ class UserControler {
             const user = await User.findOne({
                 where: {login}
             })
+
             if (!user) {
-                res.redirect('/login')
+                return res.redirect('/login')
             }
 
             const isUserLogged = bcrypt.compareSync(password, user.password);
+
             if (!isUserLogged) {
-                res.redirect('/login')
+                return res.redirect('/login')
             }
 
             req.session.user = {
                 id: user.id,
                 login: user.login
             }
-            res.redirect('/admin/articles')
+
+            return res.redirect('/admin/articles')
         } catch (err) {
             console.log(err)
-            res.redirect('/login')
+            return res.redirect('/login')
         }
     }
 
     async renderPageListUsers(req, res) {
         const isUserLogged = req.session.user;
+
         if (!isUserLogged) {
-            res.redirect('/')
+            return res.redirect('/')
         }
         const categories = await Category.findAll()
         const users = await User.findAll()
 
-        res.render(
+        return res.render(
             "admin/users/list",
             {
                 categories,
@@ -56,7 +61,7 @@ class UserControler {
     async renderPageCreateUsers(req, res) {
         const categories = await Category.findAll()
 
-        res.render(
+        return res.render(
             'admin/users/create',
             {
                 categories: categories
@@ -68,8 +73,9 @@ class UserControler {
         try {
             const {email, password, login} = req.body;
             const user = await User.findOne({where: {email: email}})
+
             if (user) {
-                res.redirect('/admin/users/create')
+                return res.redirect('/admin/users/create')
             }
 
             const salt = bcrypt.genSaltSync(10);
@@ -80,33 +86,32 @@ class UserControler {
                 password: hash
             })
 
-            res.redirect('/');
+            return res.redirect('/');
         } catch (err) {
-            res.redirect('/');
+            return res.redirect('/');
         }
     }
 
     async deleteUser(req, res) {
         const id = req.body.id;
-        if (!id) {
-            res.redirect("/admin/users");
+
+        if (!id || isNaN(id)) {
+            return res.redirect("/admin/users");
         }
-        if (isNaN(id)) {
-            res.redirect("/admin/users");
-        }
+
         await User.destroy({
             where: {
                 id: id
             }
         })
 
-        res.redirect("/admin/users");
+        return res.redirect("/admin/users");
     }
 
     async renderLoginPage(req, res) {
         const categories = await Category.findAll()
 
-        res.render('admin/users/login', {categories: categories})
+        return res.render('admin/users/login', {categories: categories})
     }
 }
 

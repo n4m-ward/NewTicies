@@ -48,13 +48,10 @@ class ArticlesControler {
     async deleteArticle(req, res) {
         const id = req.body.id;
 
-        if (id === undefined) {
+        if (!id || isNaN(id)) {
             return res.redirect("/admin/articles");
         }
 
-        if (isNaN(id)) {
-            return res.redirect("/admin/articles");
-        }
         await Article.destroy({
             where: {
                 id: id
