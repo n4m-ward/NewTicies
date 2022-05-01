@@ -1,10 +1,9 @@
-function adminAuth(req,res,next){
-    if(req.session.user != undefined){
+function adminAuth(req,res,next) {
+    if(req.session.user){
         next();
     }
-    else{
-        res.redirect('/login')
-    }
+
+    return res.redirect('/login')
 }
 
 module.exports = adminAuth;
